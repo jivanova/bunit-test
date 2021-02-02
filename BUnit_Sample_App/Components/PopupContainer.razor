@@ -1,0 +1,31 @@
+﻿<CascadingValue Name="Container" Value="this" IsFixed="true">
+    @ChildContent
+
+    @foreach (var item in Fragments)
+    {
+        <div class="popup">
+            @item.ChildContent
+        </div>
+    }
+
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    internal List<PopupFragment> Fragments { get; set; } = new List<PopupFragment>();
+
+    internal void AddPopupFragment(PopupFragment popupFragment)
+    {
+        Fragments.Add(popupFragment);
+
+        StateHasChanged();
+    }
+
+    internal void RemovePopupFragment(PopupFragment popupFragment)
+    {
+        Fragments.Remove(popupFragment);
+    }
+}

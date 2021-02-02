@@ -1,0 +1,20 @@
+﻿@implements IDisposable
+
+@code {
+    [CascadingParameter(Name = "Container")]
+    public PopupContainer Container { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Container?.AddPopupFragment(this);
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        Container?.RemovePopupFragment(this);
+    }
+}
