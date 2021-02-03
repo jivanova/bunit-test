@@ -30,9 +30,29 @@ namespace BUnit_Test
 
             var popupContainer = ctx.RenderComponent<PopupContainer>();
 
-            var indexPage = ctx.RenderComponent<Index>(parameters => parameters.AddCascadingValue("Container", popupContainer.Instance));
+            ctx.RenderComponent<Index>(parameters => parameters.AddCascadingValue("Container", popupContainer.Instance));
+
+            var indexPage = popupContainer.FindComponent<Index>();
 
             Assert.Contains("Content1", popupContainer.Markup);
+        }
+
+
+        [Fact]
+        public void PopupContainer_find_inner_button()
+        {
+            using var ctx = new MyTestContext();
+
+            var popupContainer = ctx.RenderComponent<PopupContainer>(ps => ps.AddChildContent<Index>());
+            var popup = popupContainer.FindComponent<Popup>();
+            
+            //following the structure of nesting components cannot find the button
+            var button = popup.FindComponent<Button>();
+
+            //the below code works
+            //var button = popupContainer.FindComponent<Button>();
+
+            Assert.Contains("Test1", button.Markup);
         }
     }
 }

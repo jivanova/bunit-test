@@ -2,9 +2,14 @@
     <div style="margin-bottom:20px">Popup</div>
     <hr />
     @PopupContent
+    <hr />
+    @ChildContent
 </PopupFragment>
 
 @code {
     [Parameter]
     public string PopupContent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }
